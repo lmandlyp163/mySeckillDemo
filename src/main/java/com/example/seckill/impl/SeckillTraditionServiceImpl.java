@@ -17,9 +17,6 @@ import org.springframework.stereotype.Service;
 
 /**
  * 传统方式(并发会出现错误)
- *
- * @author wliduo[i@dolyw.com]
- * @date 2019-11-20 18:03:33
  */
 @Service("seckillTraditionService")
 public class SeckillTraditionServiceImpl implements ISeckillService {

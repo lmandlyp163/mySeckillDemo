@@ -4,9 +4,6 @@ import java.lang.annotation.*;
 
 /**
  * 限流注解
- *
- * @author wliduo[i@dolyw.com]
- * @date 2019/11/26 9:59
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

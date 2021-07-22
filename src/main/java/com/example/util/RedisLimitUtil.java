@@ -16,9 +16,6 @@ import java.util.List;
 
 /**
  * RedisLimitUtil
- *
- * @author wliduo[i@dolyw.com]
- * @date 2019/11/14 16:44
  */
 @Component
 public class RedisLimitUtil {
@@ -63,12 +60,6 @@ public class RedisLimitUtil {
 
     /**
      * 秒级限流判断(每秒限制多少请求)
-     *
-	 * @param maxRequest 限流最大请求数
-     * @return boolean
-     * @throws
-     * @author wliduo[i@dolyw.com]
-     * @date 2019/11/25 17:57
      */
     public Long limit(String maxRequest) {
         // 获取key名，当前时间戳
@@ -81,13 +72,6 @@ public class RedisLimitUtil {
 
     /**
      * 自定义参数限流判断(自定义多少时间限制多少请求)
-     *
-     * @param maxRequest 限流最大请求数
-     * @param timeRequest 一个时间窗口(秒)
-     * @return boolean
-     * @throws
-     * @author wliduo[i@dolyw.com]
-     * @date 2019/11/25 17:57
      */
     public Long limit(String maxRequest, String timeRequest) {
         // 获取key名，一个时间窗口开始时间(限流开始时间)和一个时间窗口内请求的数量累计(限流累计请求数)
@@ -104,14 +88,6 @@ public class RedisLimitUtil {
 
     /**
      * 执行Lua脚本方法
-     *
-     * @param script
-	 * @param keys
-	 * @param args
-     * @return java.lang.Object
-     * @throws
-     * @author wliduo[i@dolyw.com]
-     * @date 2019/11/26 10:50
      */
     private Long eval(String script, List<String> keys, List<String> args) {
         // 执行脚本
@@ -122,12 +98,6 @@ public class RedisLimitUtil {
 
     /**
      * 获取Lua脚本
-     *
-     * @param path
-     * @return java.lang.String
-     * @throws
-     * @author wliduo[i@dolyw.com]
-     * @date 2019/11/25 17:57
      */
     private static String getScript(String path) {
         StringBuilder stringBuilder = new StringBuilder();

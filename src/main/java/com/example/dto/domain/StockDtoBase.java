@@ -5,24 +5,20 @@
  */
 package com.example.dto.domain;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * StockDtoBase
- * @author wliduo[i@dolyw.com]
- * @date 2019-11-20 18:03:33
  */
 public class StockDtoBase implements Serializable {
 

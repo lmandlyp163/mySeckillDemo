@@ -17,9 +17,6 @@ import org.springframework.stereotype.Service;
 
 /**
  * 使用乐观锁
- *
- * @author wliduo[i@dolyw.com]
- * @date 2019-11-20 18:03:33
  */
 @Service("seckillOptimisticLockService")
 public class SeckillOptimisticLockServiceImpl implements ISeckillService {

@@ -5,14 +5,13 @@
  */
 package com.example.dto.custom;
 
-import java.io.Serializable;
-import javax.persistence.Table;
 import com.example.dto.domain.StockDtoBase;
+
+import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * StockDto
- * @author wliduo[i@dolyw.com]
- * @date 2019-11-20 18:03:33
  */
 @Table(name = "t_seckill_stock")
 public class StockDto extends StockDtoBase implements Serializable {

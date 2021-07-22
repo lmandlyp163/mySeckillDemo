@@ -12,18 +12,12 @@ import java.util.List;
 
 /**
  * StockOrderDao
- * @author wliduo[i@dolyw.com]
- * @date 2019-11-20 18:03:33
  */
 @Repository
 public interface StockOrderDao extends Mapper<StockOrderDto> {
 
     /**
      * 列表
-     * @param stockOrderDto
-     * @return java.util.List<com.example.dto.custom.StockOrderDto;>
-     * @author wliduo[i@dolyw.com]
-     * @date 2019-11-20 18:03:33
      */
     public List<StockOrderDto> findPageInfo(StockOrderDto stockOrderDto);
 }

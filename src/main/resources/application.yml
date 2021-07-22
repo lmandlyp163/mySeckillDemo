@@ -4,9 +4,9 @@ server:
 spring:
     datasource:
         name: SeckillEvolution
-        url: jdbc:mysql://127.0.0.1:3306/seckill?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=UTF-8
-        username: root
-        password: root
+        url: jdbc:mysql://10.22.221.110:5002/banmamall?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+        username: limao
+        password: limao
         # 使用Druid数据源
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver

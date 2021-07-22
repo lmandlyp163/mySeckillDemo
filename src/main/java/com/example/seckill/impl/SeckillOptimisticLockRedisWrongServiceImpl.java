@@ -25,9 +25,6 @@ import java.util.List;
 
 /**
  * 使用乐观锁加缓存的方式(线程不安全)
- *
- * @author wliduo[i@dolyw.com]
- * @date 2019-11-20 18:03:33
  */
 @Service("seckillOptimisticLockRedisWrongService")
 public class SeckillOptimisticLockRedisWrongServiceImpl implements ISeckillService {
@@ -82,12 +79,6 @@ public class SeckillOptimisticLockRedisWrongServiceImpl implements ISeckillServi
     /**
      * 这里遵循先更新数据库，再更新缓存，详细的数据库与缓存一致性解析可以查看
      * https://note.dolyw.com/cache/00-DataBaseConsistency.html
-     *
-     * @param stockDto
-     * @return java.lang.Integer
-     * @throws
-     * @author wliduo[i@dolyw.com]
-     * @date 2019/11/22 16:25
      */
     public void updateCache(StockDto stockDto) {
         // 获取事务

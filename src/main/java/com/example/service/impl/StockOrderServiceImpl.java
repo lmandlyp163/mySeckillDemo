@@ -16,8 +16,6 @@ import java.util.List;
 
 /**
  * StockOrderServiceImpl
- * @author wliduo[i@dolyw.com]
- * @date 2019-11-20 18:03:33
  */
 @Service("stockOrderService")
 public class StockOrderServiceImpl extends BaseServiceImpl<StockOrderDto> implements IStockOrderService {

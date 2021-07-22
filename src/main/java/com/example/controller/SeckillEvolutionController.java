@@ -4,9 +4,7 @@ import com.example.common.ResponseBean;
 import com.example.constant.Constant;
 import com.example.dto.custom.StockDto;
 import com.example.dto.custom.StockOrderDto;
-import com.example.exception.CustomException;
 import com.example.limit.Limit;
-import com.example.seckill.ISeckillService;
 import com.example.service.ISeckillEvolutionService;
 import com.example.service.IStockOrderService;
 import com.example.service.IStockService;
@@ -15,15 +13,16 @@ import com.example.util.RedisLimitUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 一个简单的秒杀架构的演变
- *
- * @author wliduo[i@dolyw.com]
- * @date 2019/11/20 19:49
+ * @author lm
  */
 @RestController
 @RequestMapping("/seckill")
@@ -71,12 +70,6 @@ public class SeckillEvolutionController {
 
     /**
      * 初始化库存数量
-     *
-     * @param id 商品ID
-     * @return com.example.common.ResponseBean
-     * @throws
-     * @author wliduo[i@dolyw.com]
-     * @date 2019/11/22 15:59
      */
     @PutMapping("/init/{id}")
     public ResponseBean init(@PathVariable("id") Integer id) {
@@ -96,32 +89,7 @@ public class SeckillEvolutionController {
     }
 
     /**
-     * 缓存预热
-     *
-     * @param id 商品ID
-     * @return com.example.common.ResponseBean
-     * @throws
-     * @author wliduo[i@dolyw.com]
-     * @date 2019/11/22 15:59
-     */
-    @PutMapping("/initCache/{id}")
-    public ResponseBean initCache(@PathVariable("id") Integer id) {
-        StockDto stockDto = stockService.selectByPrimaryKey(id);
-        // 商品缓存预热
-        JedisUtil.set(Constant.PREFIX_COUNT + id.toString(), stockDto.getCount().toString());
-        JedisUtil.set(Constant.PREFIX_SALE + id.toString(), stockDto.getSale().toString());
-        JedisUtil.set(Constant.PREFIX_VERSION + id.toString(), stockDto.getVersion().toString());
-        return new ResponseBean(HttpStatus.OK.value(), "缓存预热成功", null);
-    }
-
-    /**
      * 传统方式下订单
-     *
-     * @param id 商品ID
-     * @return com.example.common.ResponseBean
-     * @throws Exception
-     * @author wliduo[i@dolyw.com]
-     * @date 2019/11/21 19:50
      */
     @PostMapping("/createWrongOrder/{id}")
     public ResponseBean createWrongOrder(@PathVariable("id") Integer id) throws Exception {
@@ -131,12 +99,6 @@ public class SeckillEvolutionController {
 
     /**
      * 使用乐观锁下订单
-     *
-     * @param id 商品ID
-     * @return com.example.common.ResponseBean
-     * @throws Exception
-     * @author wliduo[i@dolyw.com]
-     * @date 2019/11/22 14:24
      */
     @PostMapping("/createOptimisticLockOrder/{id}")
     public ResponseBean createOptimisticLockOrder(@PathVariable("id") Integer id) throws Exception {
@@ -144,19 +106,29 @@ public class SeckillEvolutionController {
         return new ResponseBean(HttpStatus.OK.value(), "购买成功", orderCount);
     }
 
+
+    /**
+     * 缓存预热
+     */
+    @PostMapping("/initCache/{id}")
+    public ResponseBean initCache(@PathVariable("id") Integer id) {
+        StockDto stockDto = stockService.selectByPrimaryKey(id);
+        // 商品缓存预热
+        JedisUtil.set(Constant.PREFIX_COUNT + id.toString(), stockDto.getCount().toString());
+        JedisUtil.set(Constant.PREFIX_SALE + id.toString(), stockDto.getSale().toString());
+        JedisUtil.set(Constant.PREFIX_VERSION + id.toString(), stockDto.getVersion().toString());
+        return new ResponseBean(HttpStatus.OK.value(), "缓存预热成功", null);
+    }
+
+
+
     /**
      * 使用乐观锁下订单，并且添加读缓存，性能提升
-     *
-     * @param id 商品ID
-     * @return com.example.common.ResponseBean
-     * @throws Exception
-     * @author wliduo[i@dolyw.com]
-     * @date 2019/11/22 14:24
      */
     @PostMapping("/createOptimisticLockOrderWithRedis/{id}")
     public ResponseBean createOptimisticLockOrderWithRedis(@PathVariable("id") Integer id) throws Exception {
         // 错误的，线程不安全
-        // Integer orderCount = seckillEvolutionService.createOptimisticLockOrderWithRedisWrong(id);
+//         Integer orderCount = seckillEvolutionService.createOptimisticLockOrderWithRedisWrong(id);
         // 正确的，线程安全
         Integer orderCount = seckillEvolutionService.createOptimisticLockOrderWithRedisSafe(id);
         return new ResponseBean(HttpStatus.OK.value(), "购买成功", null);
@@ -164,18 +136,10 @@ public class SeckillEvolutionController {
 
     /**
      * 使用乐观锁下订单，并且添加读缓存，再添加限流
-     *
-     * @param id 商品ID
-     * @return com.example.common.ResponseBean
-     * @throws Exception
-     * @author wliduo[i@dolyw.com]
-     * @date 2019/11/22 14:24
      */
     @Limit
     @PostMapping("/createOptimisticLockOrderWithRedisLimit/{id}")
     public ResponseBean createOptimisticLockOrderWithRedisLimit(@PathVariable("id") Integer id) throws Exception {
-        // 错误的，线程不安全
-        // Integer orderCount = seckillEvolutionService.createOptimisticLockOrderWithRedisWrong(id);
         // 正确的，线程安全
         Integer orderCount = seckillEvolutionService.createOptimisticLockOrderWithRedisSafe(id);
         return new ResponseBean(HttpStatus.OK.value(), "购买成功", null);

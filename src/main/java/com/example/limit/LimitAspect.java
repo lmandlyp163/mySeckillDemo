@@ -12,9 +12,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * LimitAspect限流切面
- *
- * @author wliduo[i@dolyw.com]
- * @date 2019/11/26 10:07
  */
 @Order(0)
 @Aspect
@@ -39,24 +36,12 @@ public class LimitAspect {
 
     /**
      * 对应注解
-     *
-     * @param
-     * @return void
-     * @throws
-     * @author wliduo[i@dolyw.com]
-     * @date 2019/11/26 10:11
      */
     @Pointcut("@annotation(com.example.limit.Limit)")
     public void aspect() {}
 
     /**
      * 切面
-     *
-     * @param proceedingJoinPoint
-     * @return java.lang.Object
-     * @throws
-     * @author wliduo[i@dolyw.com]
-     * @date 2019/11/26 10:11
      */
     @Around("aspect() && @annotation(limit)")
     public Object Interceptor(ProceedingJoinPoint proceedingJoinPoint, Limit limit) {
@@ -85,12 +70,6 @@ public class LimitAspect {
 
     /**
      * 执行方法前再执行
-     *
-     * @param limit
-     * @return void
-     * @throws
-     * @author wliduo[i@dolyw.com]
-     * @date 2019/11/26 10:10
      */
     @Before("aspect() && @annotation(limit)")
     public void before(Limit limit) {
@@ -99,12 +78,6 @@ public class LimitAspect {
 
     /**
      * 执行方法后再执行
-     *
-     * @param limit
-     * @return void
-     * @throws
-     * @author wliduo[i@dolyw.com]
-     * @date 2019/11/26 10:10
      */
     @After("aspect() && @annotation(limit)")
     public void after(Limit limit) {

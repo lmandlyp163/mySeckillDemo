@@ -2,9 +2,6 @@ package com.example.common;
 
 /**
  * ResponseBean
- *
- * @author wliduo[i@dolyw.com]
- * @date 2018/8/30 11:39
  */
 public class ResponseBean {
     /**
